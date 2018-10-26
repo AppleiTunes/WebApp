@@ -52,12 +52,14 @@ function jumpLeft() {
 function showFront() {
     display.style.transition = "0.35s"
     display.style.transform = "rotateY(0deg)";
+    display.style.webkitTransform  = "rotateY(0deg)";
 }
 
 // Show back of card
 function showBack(correct) {
     display.style.transition = "0.35s"
     display.style.transform = "rotateY(180deg)";
+    display.style.webkitTransform = "rotateY(180deg)";
 
     if (correct) {
         display.style.backgroundColor = "green";

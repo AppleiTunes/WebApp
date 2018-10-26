@@ -39,6 +39,7 @@
 #front, #back {
 	position: absolute;
 	backface-visibility: hidden;
+	-webkit-backface-visibility: hidden;
 }
 
 #front {
@@ -48,6 +49,7 @@
 #back {
 	color: white;
 	transform: rotateY(180deg);
+	-webkit-transform: rotateY(180deg);
 }
 
 button {

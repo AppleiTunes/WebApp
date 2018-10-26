@@ -1,258 +1,232 @@
-var deck = null;
+var display;
+var container;
+var textInput;
+var button;
+var langList;
 
-window.onload = function() {
-    deck = new cardDeck;
-    deck.loadValues();
-    jumpLeft();
-}
+var progress;
 
-window.onresize = function() {
-    if (deck.input.style.visibility === "visible") {
-        window.setTimeout(function() {
-            moveCenter();
-        }, 200);
-    }
-}
-
-class cardDeck {
-    constructor() {
-        this.type = 0;
-        this.flip = false;
-    }
-
-    loadValues() {
-        this.container = document.getElementById("testing_container");
-        this.card = document.getElementById("flip-container");
-        this.display = document.getElementById("flipper");
-        this.front = document.getElementById("front");
-        this.back = document.getElementById("back");
-        this.input = document.getElementById("input_container");
-        this.textInput = document.getElementById("textInput");
-        this.button = document.getElementById("continue");
-
-        this.prevButton = document.getElementById("prev");
-        this.nextButton = document.getElementById("next");
-
-        var tempCopy = this;
-        this.textInput.addEventListener("keydown", function(e) {
-            if (e.keyCode == 13) {
-                tempCopy.reviewNext();
-            }
-        });
-    }
-
-    loadDeck(list) {
-        this.list = list;
-        this.index = 0;
-
-        this.textInput.placeholder = this.list[this.index][1];
-
-        moveLeft();
-        var tempCopy = this;
-        window.setTimeout(function() {
-            showFront();
-            tempCopy.front.innerHTML = tempCopy.list[tempCopy.index][0];
-            tempCopy.back.innerHTML = tempCopy.list[tempCopy.index][1];
-            moveCenter();
-        }, 200);
-    }
-
-    prev() {
-        moveLeft();
-
-        this.index -= 1;
-        var tempCopy = this;
-
-        window.setTimeout(function() {
-            showFront();
-            jumpRight();
-            tempCopy.front.innerHTML = tempCopy.list[tempCopy.index][0];
-            tempCopy.back.innerHTML = tempCopy.list[tempCopy.index][1];
-            window.setTimeout(function() {
-                moveCenter();
-            }, 100);
-        }, 100);
-
-        alert(this.index);
-        if (this.index != 0) {
-            this.prevButton.disabled = true;
-        } else {
-            this.prevButton.disabled = false;
-        }
-    }
-
-    next() {
-        moveRight();
-
-        this.index += 1;
-        var tempCopy = this;
-
-        window.setTimeout(function() {
-            showFront();
-            jumpLeft();
-            tempCopy.front.innerHTML = tempCopy.list[tempCopy.index][0];
-            tempCopy.back.innerHTML = tempCopy.list[tempCopy.index][1];
-            window.setTimeout(function() {
-                moveCenter();
-            }, 100);
-        }, 100);
-    }
-
-    reviewNext() {
-        showBack();
-        lockInput();
-
-        var correct = compare(this.textInput.value, this.list[this.index][1]);
-
-        if (correct) {
-            this.back.style.backgroundColor = "#006400";
-        } else {
-            this.back.style.backgroundColor = "#B22222";
-        }
-
-        var tempCopy = this;
-
-        window.setTimeout(function() {
-            if (correct) {
-                moveRight();
-                if (tempCopy.list[tempCopy.index][2] >= 3) {
-                    tempCopy.list.splice(tempCopy.index, 1);
-                } else {
-                    tempCopy.list[tempCopy.index][2] += 1;
-                    if (tempCopy.list[tempCopy.index][2] == 2) {
-                        let temp = tempCopy.list[tempCopy.index][0];
-                        tempCopy.list[tempCopy.index][0] = tempCopy.list[tempCopy.index][1];
-                        tempCopy.list[tempCopy.index][1] = temp;
-                    }
-                }
-            } else {
-                moveLeft();
-            }
-
-            // If there are still levels in the card
-            if (tempCopy.list.length !== 0) {
-                window.setTimeout(function() {
-                    jumpLeft();
-                    showFront();
-                    tempCopy.index = Math.floor(Math.random() * (tempCopy.list.length));
-                    tempCopy.front.innerHTML = tempCopy.list[tempCopy.index][0];
-                    tempCopy.back.innerHTML = tempCopy.list[tempCopy.index][1];
-                    window.setTimeout(function() {
-                        moveCenter();
-                        unlockInput();
-                        tempCopy.textInput.focus();
-                        tempCopy.back.style.backgroundColor = "#1C86EE";
-                        if (tempCopy.list[tempCopy.index][2] == 0 || tempCopy.list[tempCopy.index][2] == 2) {
-                            tempCopy.textInput.placeholder = tempCopy.list[tempCopy.index][1];
-                        } else {
-                            tempCopy.textInput.placeholder = "";
-                        }
-                    }, 200);
-                }, 200);
-            } else {
-                // Win here
-                window.setTimeout(function() {
-                    jumpLeft();
-                    showFront();
-                }, 200);
-                unlockInput();
-                hideInput();
-            }
-        }, 1000);
-    }
-}
+var state = 0;
 
 function compare(txt1, txt2) {
-    return txt1 === txt2;
+    txt1.replace(/\u00dc/g, "u");   // u00dc = Ü
+    txt1.replace(/\u00fc/g, "u");   // u00fc = ü
+    return txt1.toLowerCase() === txt2.toLowerCase();
 }
 
-function learn() {
-    deck.loadDeck([["Deutschland", "Germany", 0], ["Hallo", "hello", 0]]);
-    showInput();
-    deck.textInput.focus();
-}
+var currentDeckIndex = 0
+var review = 0
 
-function study() {
-    deck.loadDeck([["Deutschland", "Germany", 0], ["Hallo", "hello", 0]]);
-    showInput();
-}
-
-function review() {
-    deck.review();
-}
-
-function prev() {
-    deck.prev();
-}
-
-function next() {
-    deck.next();
-}
-
-function reviewNext() {
-    deck.reviewNext();
-}
-
+// Move to the left
 function moveLeft() {
-    deck.display.style.transition = "0.15s"
-    deck.display.style.left = -deck.container.clientWidth + "px";
+    state = 0;
+    
+    display.style.transition = "0.25s"
+    display.style.left = (-container.clientWidth - 15) + "px";
 }
 
+// Move to the center
 function moveCenter() {
-    deck.display.style.transition = "0.15s"
-    deck.display.style.left = (deck.container.clientWidth / 2) - (deck.card.clientWidth / 2) + "px";
+    state = 1;
+
+    display.style.transition = "0.25s"
+    display.style.left = (container.clientWidth / 2) - (display.clientWidth / 2) - 30 + "px";
 }
 
+// Move to the right
 function moveRight() {
-    deck.display.style.transition = "0.15s"
-    deck.display.style.left = (deck.container.clientWidth + 15) + "px";
+    state = 2;
+
+    display.style.transition = "0.25s"
+    display.style.left = (container.clientWidth + 15) + "px";
 }
 
+// Jump to the left
 function jumpLeft() {
-    deck.display.style.transition = "0s"
-    deck.display.style.left = -deck.container.clientWidth + "px";
+    state = 0;
+
+    display.style.transition = "0s"
+    display.style.left = (-container.clientWidth - 15) + "px";
 }
 
-function jumpRight() {
-    deck.display.style.transition = "0s"
-    deck.display.style.left = (deck.container.clientWidth + 15) + "px";
-}
-
+// Show front of card
 function showFront() {
-    deck.display.style.transition = "0.25s"
-    deck.display.style.transform = "rotateY(0deg)";
-    deck.flip = true;
+    display.style.transition = "0.35s"
+    display.style.transform = "rotateY(0deg)";
 }
 
-function showBack() {
-    deck.display.style.transition = "0.25s"
-    deck.display.style.transform = "rotateY(180deg)";
-    deck.flip = false;
-}
+// Show back of card
+function showBack(correct) {
+    display.style.transition = "0.35s"
+    display.style.transform = "rotateY(180deg)";
 
-function flip() {
-    if (deck.flip) {
-        showBack();
+    if (correct) {
+        display.style.backgroundColor = "green";
     } else {
-        showFront();
+        display.style.backgroundColor = "red";
     }
 }
 
-function showInput() {
-    deck.input.style.visibility = "visible";
-}
-
-function hideInput() {
-    deck.input.style.visibility = "hidden";
-}
-
+// Lock input
 function lockInput() {
-    deck.textInput.disabled = true;
-    deck.button.disabled = true;
+    textInput.disabled = true;
+    button.disabled = true;
 }
 
+// Unlock input
 function unlockInput() {
-    deck.textInput.disabled = false;
-    deck.button.disabled = false;
-    deck.textInput.value = "";
+    textInput.disabled = false;
+    button.disabled = false;
+    textInput.value = "";
+    textInput.focus();
 }
+
+class Word {
+    constructor(english, target) {
+        this.english = english
+        this.target = target
+        this.streak = true
+        this.flip = false
+    }
+}
+
+// Card decks
+var notUsed = []
+var currentList = [null, null, null, null, null]
+var used = []
+
+window.onresize = function() {
+    switch (state) {
+        case 0:
+            moveLeft();
+            break;
+        case 1:
+            moveCenter();
+            break;
+        case 2:
+            moveRight();
+            break;
+    }
+}
+
+function checkNext() {
+    if (!currentList[currentDeckIndex].flip) {
+        let userInput = textInput.value;
+
+        if (compare(userInput, currentList[currentDeckIndex].target)) {
+            showBack(true);
+
+            if (currentList[currentDeckIndex].streak) {
+                currentList[currentDeckIndex].flip = true;
+            } else {
+                currentList[currentDeckIndex].streak = true;
+            }
+
+            window.setTimeout(function() {
+                moveRight();
+            }, 1250);
+        } else {
+            showBack(false);
+
+            currentList[currentDeckIndex].streak = false;
+
+            window.setTimeout(function() {
+                moveLeft();
+            }, 1250);
+        }
+    } else {
+        let userInput = textInput.value;
+
+        if (compare(userInput, currentList[currentDeckIndex].english)) {
+            showBack(true);
+
+            if (currentList[currentDeckIndex].streak) {
+                used.push(currentList[currentDeckIndex]);
+                currentList[currentDeckIndex] = null;
+            } else {
+                currentList[currentDeckIndex].streak = true;
+            }
+
+            window.setTimeout(function() {
+                moveRight();
+            }, 1250);
+        } else {
+            showBack(false);
+
+            currentList[currentDeckIndex].streak = false;
+
+            window.setTimeout(function() {
+                moveLeft();
+            }, 1250);
+        }
+    }
+
+    lockInput();
+    textInput.value = back.innerHTML;
+
+    currentDeckIndex = (currentDeckIndex + 1) % currentList.length;
+
+    window.setTimeout(function() {
+        setNext();
+    }, 1500);
+}
+
+function setNext() {
+    showFront();
+    jumpLeft();
+
+    display.style.backgroundColor = "#1C86EE";
+
+    if (currentList[currentDeckIndex] === null) {
+        if ((5 <= review && 0 < used.length) || notUsed.length === 0) {
+            used[0].flip = false;
+            currentList[currentDeckIndex] = used[0];
+            used.splice(0, 1);
+            review = 0;
+        } else {
+            currentList[currentDeckIndex] = notUsed[0];
+            notUsed.splice(0, 1);
+            review += 1;
+        }
+    }
+
+    if (currentList[currentDeckIndex].flip) {
+        front.innerHTML = currentList[currentDeckIndex].target;
+        back.innerHTML = currentList[currentDeckIndex].english;
+    } else {
+        front.innerHTML = currentList[currentDeckIndex].english;
+        back.innerHTML = currentList[currentDeckIndex].target;
+    }
+
+    window.setTimeout(function() {
+        moveCenter();
+        unlockInput();
+    }, 200);
+
+    progress.innerHTML = "Progress: " + used.length;
+}
+
+window.onload = function() {
+    display = document.getElementById("flipper");               // Card container
+    container = document.getElementById("card_container");
+    button = document.getElementById("continue");
+    textInput = document.getElementById("textInput");
+
+    progress = document.getElementById("progress");
+
+    textInput.addEventListener("keyup", function(event) {
+        event.preventDefault();
+        if (event.keyCode === 13) {
+            checkNext();
+        }
+    });
+
+    fetch("german.json").then(function(response) {
+        response.json().then(function(data) {
+            for (var i = 0; i < data.length; i++) {
+                notUsed.push(new Word(data[i][0], data[i][1]));
+            }
+            setNext();
+        });
+    });
+};

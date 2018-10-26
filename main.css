@@ -1,31 +1,19 @@
-#decks_container {
-	margin: auto;
-	width: 90%;
+#progress {
+	font-size: 5vw;
+	text-align: center;
 }
 
-#testing_container {
+#body_container {
 	margin: auto;
 	width: 90%;
-
-	/* border: solid; */
 }
 
 #card_container {
 	width: 100%;
 	overflow: hidden;
-
 	font-size: 5vw;
-
-	font-family: 'Bad Script';
+	padding: 10px;
 }
-
-#input_container {
-	visibility: hidden;
-	text-align: center;
-}
-
-
-
 
 #flip-container, #front, #back {
 	width: 50vw;
@@ -34,46 +22,33 @@
 	text-align: center;
 	vertical-align: middle;
 	line-height: 50vw;
-
-	/* Card slide transition */
-	transition: 0.25s;
-
-	border-radius: 15px;
 }
 
-/* flip speed goes here */
 #flipper {
-	transition: 0.35s;
 	transform-style: preserve-3d;
-
 	position: relative;
-
 	text-align: center;
 	height: 50vw;
 	line-height: 50vw;
-}
-
-/* hide back of pane during swap */
-#front, #back {
-	position: absolute;
 
 	background-color: #1C86EE;
-	
+	border-radius: 5vw;
+	box-shadow: 0.5vw 0.5vw 0.5vw rgb(175, 175, 175);
+}
 
-	box-shadow: rgba(0, 0, 0, 0.25) 5px 0 10px 0px;
+#front, #back {
+	position: absolute;
+	backface-visibility: hidden;
 }
 
 #front {
 	color: white;
 }
 
-/* back, initially hidden pane */
 #back {
 	color: white;
 	transform: rotateY(180deg);
 }
-
-
 
 button {
 	height: 7vw;
@@ -84,6 +59,7 @@ button {
 	background-color: rgb(235, 235, 235);
 	color: rgb(110, 110, 110);
 	border-radius: 5px;
+	box-shadow: 0.25vw 0.25vw 0.25vw rgb(175, 175, 175);
 
 	padding: 5px;
 	margin: 5px;
@@ -92,12 +68,6 @@ button {
 	vertical-align: middle;
 	line-height: 5vw;
 }
-
-button:hover {
-	border: solid 1px rgb(200, 200, 200);
-	background-color:rgb(240, 240, 240);
-	color: rgb(53, 53, 53);
- }
 
  input {
 	width: 50vw;
@@ -109,18 +79,15 @@ button:hover {
 	padding: 7px;
 	margin: 5px;
 	outline: none;
-	
-	-webkit-transition: box-shadow 0.1s ease-out;
-	-moz-transition: box-shadow 0.1s ease-out;
-	-o-transition: box-shadow 0.1s ease-out;
 
 	vertical-align: middle;
 	line-height: 3vw;
+
+	text-align: center;
 }
 
-input:hover {
-   box-shadow: 0.5vw 0.5vw 0.5vw rgb(175, 175, 175);
-	-webkit-transition: box-shadow 0.1s ease-in;
-	-moz-transition: box-shadow 0.1s ease-in;
-	-o-transition: box-shadow 0.1s ease-in;
+#input_conatiner {
+	width: 100%;
+	text-align: center;
+	margin: auto;
 }

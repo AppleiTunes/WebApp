@@ -225,6 +225,10 @@ window.onload = function() {
 
     progress = document.getElementById("progress");
 
+    button.ontouchstart = function() {
+        checkNext();
+    }
+
     textInput.addEventListener("keyup", function(event) {
         event.preventDefault();
         if (event.keyCode === 13) {

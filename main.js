@@ -10,6 +10,10 @@ var state = 0;
 function compare(txt1, txt2) {
     txt1.replace(/\u00dc/g, "u");   // u00dc = Ü
     txt1.replace(/\u00fc/g, "u");   // u00fc = ü
+
+    txt2.replace(/\u00dc/g, "u");   // u00dc = Ü
+    txt2.replace(/\u00fc/g, "u");   // u00fc = ü
+
     return txt1.toLowerCase() === txt2.toLowerCase();
 }
 
@@ -95,6 +99,10 @@ class Word {
 var notUsed = []
 var currentList = [null, null, null, null, null]
 var used = []
+
+document.ontouchmove = function(event){
+    event.preventDefault();
+}
 
 window.onresize = function() {
     switch (state) {

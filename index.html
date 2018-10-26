@@ -16,7 +16,7 @@
             <div id ="card_container">
                 <div id="flip-container">
                     <div id="flipper">
-                        <div id="front">
+                        <div onclick="showBack(false, true)" id="front">
                             Front
                         </div>
                         <div id="back">
@@ -29,7 +29,7 @@
             <br>
 
             <div id="input_conatiner">
-                <input type="text" id="textInput">
+                <input onclick="showFront()" type="text" id="textInput">
                 <button ontouchstart="checkNext()" id="continue">Next</button>
             </div>
 

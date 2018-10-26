@@ -60,12 +60,14 @@ function showFront() {
 }
 
 // Show back of card
-function showBack(correct) {
+function showBack(correct, hint = false) {
     display.style.transition = "0.35s"
     display.style.transform = "rotateY(180deg)";
     display.style.webkitTransform = "rotateY(180deg)";
 
-    if (correct) {
+    if (hint) {
+        display.style.backgroundColor = "#1C86EE";
+    } else if (correct) {
         display.style.backgroundColor = "green";
     } else {
         display.style.backgroundColor = "red";

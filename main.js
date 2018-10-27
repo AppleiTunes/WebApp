@@ -1,93 +1,6 @@
-var display;
-var container;
-var textInput;
-var button;
-
-var progress;
-
-var state = 0;
-
-function compare(txt1, txt2) {
-    txt1.replace(/\u00dc/g, "u");   // u00dc = Ü
-    txt1.replace(/\u00fc/g, "u");   // u00fc = ü
-
-    txt2.replace(/\u00dc/g, "u");   // u00dc = Ü
-    txt2.replace(/\u00fc/g, "u");   // u00fc = ü
-
-    return txt1.toLowerCase() === txt2.toLowerCase();
-}
-
-var currentDeckIndex = 0
-var review = 0
-
-// Move to the left
-function moveLeft() {
-    state = 0;
-    
-    display.style.transition = "0.25s"
-    display.style.left = (-container.clientWidth - 15) + "px";
-}
-
-// Move to the center
-function moveCenter() {
-    state = 1;
-
-    display.style.transition = "0.25s"
-    display.style.left = (container.clientWidth / 2) - (display.clientWidth / 2) - 30 + "px";
-}
-
-// Move to the right
-function moveRight() {
-    state = 2;
-
-    display.style.transition = "0.25s"
-    display.style.left = (container.clientWidth + 15) + "px";
-}
-
-// Jump to the left
-function jumpLeft() {
-    state = 0;
-
-    display.style.transition = "0s"
-    display.style.left = (-container.clientWidth - 15) + "px";
-}
-
-// Show front of card
-function showFront() {
-    display.style.transition = "0.35s"
-    display.style.transform = "rotateY(0deg)";
-    display.style.webkitTransform  = "rotateY(0deg)";
-}
-
-// Show back of card
-function showBack(correct, hint = false) {
-    display.style.transition = "0.35s"
-    display.style.transform = "rotateY(180deg)";
-    display.style.webkitTransform = "rotateY(180deg)";
-
-    if (hint) {
-        display.style.backgroundColor = "#1C86EE";
-    } else if (correct) {
-        display.style.backgroundColor = "green";
-    } else {
-        display.style.backgroundColor = "red";
-    }
-}
-
-// Lock input
-function lockInput() {
-    textInput.disabled = true;
-    button.disabled = true;
-}
-
-// Unlock input
-function unlockInput() {
-    textInput.disabled = false;
-    button.disabled = false;
-    textInput.value = "";
-    textInput.focus();
-}
-
+/*
+Class
+*/
 class Word {
     constructor(english, target) {
         this.english = english
@@ -97,27 +10,46 @@ class Word {
     }
 }
 
-// Card decks
-var notUsed = []
-var currentList = [null, null, null, null, null]
-var used = []
 
-document.ontouchmove = function(event){
-    event.preventDefault();
+/*
+Variables
+*/
+var display = document.getElementById("flipper");
+var container = document.getElementById("card_container");
+var textInput = document.getElementById("textInput");
+var progress = document.getElementById("progress");
+
+var state = 0;
+var currentDeckIndex = 0
+var review = 0
+
+var notUsed = [];
+var currentList = [null, null, null, null, null];
+var used = [];
+
+
+/*
+Setup
+*/
+for (item of getList()) {
+    notUsed.push(new Word(item[0], item[1]));
 }
 
-window.onresize = function() {
-    switch (state) {
-        case 0:
-            moveLeft();
-            break;
-        case 1:
-            moveCenter();
-            break;
-        case 2:
-            moveRight();
-            break;
+setNext();
+
+textInput.addEventListener("keyup", function(event) {
+    event.preventDefault();
+    if (event.keyCode === 13) {
+        checkNext();
     }
+});
+
+
+/*
+Progress functions
+*/
+function compare(txt1, txt2) {
+    return txt1.toLowerCase() === txt2.toLowerCase();
 }
 
 function checkNext() {
@@ -217,29 +149,92 @@ function setNext() {
     progress.innerHTML = "Progress: " + used.length;
 }
 
-window.onload = function() {
-    display = document.getElementById("flipper");               // Card container
-    container = document.getElementById("card_container");
-    button = document.getElementById("continue");
-    textInput = document.getElementById("textInput");
 
-    progress = document.getElementById("progress");
+/*
+Move card
+!!! Make these first !!!
+*/
 
-    button.ontouchstart = function() {
-        checkNext();
-    }
-
-    textInput.addEventListener("keyup", function(event) {
-        event.preventDefault();
-        if (event.keyCode === 13) {
-            checkNext();
-        }
-    });
-
+// Move to the left
+function moveLeft() {
+    state = 0;
     
+    display.style.transition = "0.25s"
+    display.style.left = (-container.clientWidth - 15) + "px";
+}
 
-    for (var i = 0; i < langList.length; i++) {
-        notUsed.push(new Word(langList[i][0], langList[i][1]));
+// Move to the center
+function moveCenter() {
+    state = 1;
+
+    display.style.transition = "0.25s"
+    display.style.left = (container.clientWidth / 2) - (display.clientWidth / 2) + "px";
+}
+
+// Move to the right
+function moveRight() {
+    state = 2;
+
+    display.style.transition = "0.25s"
+    display.style.left = (container.clientWidth + 15) + "px";
+}
+
+// Jump to the left
+function jumpLeft() {
+    state = 0;
+
+    display.style.transition = "0s"
+    display.style.left = (-container.clientWidth - 15) + "px";
+}
+
+// Show front of card
+function showFront() {
+    display.style.transition = "0.35s"
+    display.style.transform = "rotateY(0deg)";
+    display.style.webkitTransform  = "rotateY(0deg)";
+}
+
+// Show back of card
+function showBack(correct, hint = false) {
+    display.style.transition = "0.35s"
+    display.style.transform = "rotateY(180deg)";
+    display.style.webkitTransform = "rotateY(180deg)";
+
+    if (hint) {
+        display.style.backgroundColor = "#1C86EE";
+    } else if (correct) {
+        display.style.backgroundColor = "green";
+    } else {
+        display.style.backgroundColor = "red";
     }
-    setNext();
-};
+}
+
+// Lock input
+function lockInput() {
+    textInput.disabled = true;
+}
+
+// Unlock input
+function unlockInput() {
+    textInput.disabled = false;
+    textInput.value = "";
+    textInput.focus();
+}
+
+
+/*
+Don't need
+*/
+window.onresize = function() {
+    switch (state) {
+        case 0:
+            moveLeft();
+            break;
+        case 1:
+            moveCenter();
+            break;
+        case 2:
+            moveRight();
+            break;
+    }
+}

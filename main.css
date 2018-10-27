@@ -9,7 +9,7 @@ html {
 }
 
 #body_container {
-    width: 90%;
+    width: 100%;
     position: fixed;
     top: 50%;
     left: 50%;
@@ -69,17 +69,6 @@ input {
 #back {
     transform: rotateY(180deg);
     -webkit-transform: rotateY(180deg)
-}
-
-button {
-    height: 10vw;
-    width: auto;
-    border: 1px solid #e6e6e6;
-    background-color: #ebebeb;
-    color: #6e6e6e;
-    border-radius: 5px;
-    padding: 5px;
-    line-height: 5vw
 }
 
 input {

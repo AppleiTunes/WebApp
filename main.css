@@ -1,97 +1,99 @@
+html {
+    background-color: #f2f7ff;
+    font-family: arial
+}
+
 #progress {
-	font-size: 10vw;
-	text-align: center;
+    font-size: 8vw;
+    text-align: center
 }
 
 #body_container {
-	margin: auto;
-	width: 90%;
+    width: 90%;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    -webkit-transform: translate(-50%, -50%);
+    -moz-transform: translate(-50%, -50%);
+    -o-transform: translate(-50%, -50%);
+    -ms-transform: translate(-50%, -50%)
 }
 
 #card_container {
-	width: 100%;
-	overflow: hidden;
-	font-size: 10vw;
-	padding: 1vw;
-	padding-bottom: 3vw;
+    width: 100%;
+    overflow: hidden;
+    font-size: 10vw;
+    padding: 1vw 1vw 3vw
 }
 
-#flip-container, #front, #back {
-	width: 50vw;
-	height: 50vw;
+button,
+input {
+    font-size: 7vw;
+    box-shadow: .5vw .5vw .5vw #afafaf;
+    margin: 5px;
+    vertical-align: middle;
+    text-align: center
+}
 
-	text-align: center;
-	vertical-align: middle;
-	line-height: 50vw;
-
-	backface-visibility: hidden;
-	-webkit-backface-visibility: hidden;
+#back,
+#flip-container,
+#front {
+    width: 50vw;
+    height: 50vw;
+    text-align: center;
+    vertical-align: middle;
+    line-height: 50vw;
+    backface-visibility: hidden;
+    -webkit-backface-visibility: hidden
 }
 
 #flipper {
-	transform-style: preserve-3d;
-	position: relative;
-	text-align: center;
-	height: 50vw;
-	line-height: 50vw;
-
-	background-color: #1C86EE;
-	border-radius: 5vw;
-	box-shadow: 1vw 1vw 1vw rgb(175, 175, 175);
+    transform-style: preserve-3d;
+    position: relative;
+    text-align: center;
+    height: 50vw;
+    line-height: 50vw;
+    background-color: #1C86EE;
+    border-radius: 5vw;
+    box-shadow: 1vw 1vw 1vw #afafaf;
+    cursor: pointer
 }
 
-#front, #back {
-	position: absolute;
-}
-
+#back,
 #front {
-	color: white;
+    position: absolute;
+    color: #fff
 }
 
 #back {
-	color: white;
-	transform: rotateY(180deg);
-	-webkit-transform: rotateY(180deg);
+    transform: rotateY(180deg);
+    -webkit-transform: rotateY(180deg)
 }
 
 button {
-	height: 10vw;
-	width: auto;
-	font-size: 7vw;
-
-	border: solid 1px rgb(230, 230, 230);
-	background-color: rgb(235, 235, 235);
-	color: rgb(110, 110, 110);
-	border-radius: 5px;
-	box-shadow: 0.5vw 0.5vw 0.5vw rgb(175, 175, 175);
-
-	padding: 5px;
-	margin: 5px;
-
-	text-align: center;
-	vertical-align: middle;
-	line-height: 5vw;
+    height: 10vw;
+    width: auto;
+    border: 1px solid #e6e6e6;
+    background-color: #ebebeb;
+    color: #6e6e6e;
+    border-radius: 5px;
+    padding: 5px;
+    line-height: 5vw
 }
 
- input {
-	width: 50vw;
-	height: 8vw;
-	font-size: 7vw;
-	border-radius: 2px;
-	border: solid rgb(230, 230, 230) 1px;
-	box-shadow: 0.5vw 0.5vw 0.5vw rgb(175, 175, 175);
-	padding: 7px;
-	margin: 5px;
-	outline: none;
-
-	vertical-align: middle;
-	line-height: 3vw;
-
-	text-align: center;
+input {
+    width: 50vw;
+    height: 8vw;
+    border-radius: 2px;
+    border: 1px solid #e6e6e6;
+    padding: 7px;
+    outline: 0;
+    line-height: 3vw
 }
 
 #input_conatiner {
-	width: 100%;
-	text-align: center;
-	margin: auto;
+    width: 100%;
+    text-align: center;
+    margin: auto
 }

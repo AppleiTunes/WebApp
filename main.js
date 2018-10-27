@@ -1,6 +1,7 @@
 /*
 Class
 */
+
 class Word {
     constructor(english, target) {
         this.english = english
@@ -14,6 +15,7 @@ class Word {
 /*
 Variables
 */
+
 var display = document.getElementById("flipper");
 var container = document.getElementById("card_container");
 var textInput = document.getElementById("textInput");
@@ -48,6 +50,7 @@ textInput.addEventListener("keyup", function(event) {
 /*
 Progress functions
 */
+
 function compare(txt1, txt2) {
     return txt1.toLowerCase() === txt2.toLowerCase();
 }
@@ -155,10 +158,18 @@ Move card
 !!! Make these first !!!
 */
 
+// Jump to the left
+function jumpLeft() {
+    state = 0;
+
+    display.style.transition = "0s"
+    display.style.left = (-container.clientWidth - 15) + "px";
+}
+
 // Move to the left
 function moveLeft() {
     state = 0;
-    
+
     display.style.transition = "0.25s"
     display.style.left = (-container.clientWidth - 15) + "px";
 }
@@ -179,19 +190,11 @@ function moveRight() {
     display.style.left = (container.clientWidth + 15) + "px";
 }
 
-// Jump to the left
-function jumpLeft() {
-    state = 0;
-
-    display.style.transition = "0s"
-    display.style.left = (-container.clientWidth - 15) + "px";
-}
-
 // Show front of card
 function showFront() {
     display.style.transition = "0.35s"
     display.style.transform = "rotateY(0deg)";
-    display.style.webkitTransform  = "rotateY(0deg)";
+    display.style.webkitTransform = "rotateY(0deg)";
 }
 
 // Show back of card
@@ -202,6 +205,7 @@ function showBack(correct, hint = false) {
 
     if (hint) {
         display.style.backgroundColor = "#1C86EE";
+        currentList[currentDeckIndex].streak = false;
     } else if (correct) {
         display.style.backgroundColor = "green";
     } else {
@@ -225,6 +229,7 @@ function unlockInput() {
 /*
 Don't need
 */
+
 window.onresize = function() {
     switch (state) {
         case 0:

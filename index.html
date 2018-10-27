@@ -4,35 +4,24 @@
         <title>Card List</title>
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <link rel="stylesheet" href="main.css">
-        <script src="german.js"></script>
-        <script src="main.js"></script>
+        <script src="german.js"></script> <script async src="main.js"></script> 
     </head>
     <body>
-        <div id="progress"></div>
-
-        <br>
-
-        <div id ="body_container">      
+        <div id ="body_container">
+            <div id="progress"></div>
+            <br>
             <div id ="card_container">
                 <div id="flip-container">
-                    <div id="flipper">
-                        <div onclick="showBack(false, true)" id="front">
-                            Front
-                        </div>
-                        <div id="back">
-                            Back
-                        </div>
-                    </div>
+                <div id="flipper">
+                    <div onclick="showBack(false, true)" id="front">Front</div>
+                    <div id="back">Back</div>
+                </div>
                 </div>
             </div>
-
             <br>
-
-            <div id="input_conatiner">
+            <div id="input_conatiner"> 
                 <input onclick="showFront()" type="text" id="textInput">
-                <button id="continue">Next</button>
             </div>
-
         </div>
     </body>
 </html>

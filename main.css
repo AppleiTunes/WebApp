@@ -54,16 +54,17 @@ input {
     text-align: center;
     height: 50vw;
     line-height: 50vw;
-    background-color: #1C86EE;
-    border-radius: 5vw;
-    box-shadow: 1vw 1vw 1vw #afafaf;
-    cursor: pointer
+    box-shadow: 1vw 1vw 1vw #afafaf
 }
 
 #back,
 #front {
     position: absolute;
     color: #fff
+}
+
+#front {
+    background-color: #1C86EE
 }
 
 #back {

@@ -81,6 +81,16 @@ input {
     line-height: 3vw
 }
 
+button {
+	border: solid 1px rgb(230, 230, 230);
+	background-color: rgb(235, 235, 235);
+	color: rgb(110, 110, 110);
+	border-radius: 2vw;
+
+	padding: 2vw;
+	width: 10vw
+}
+
 #input_conatiner {
     width: 100%;
     text-align: center;

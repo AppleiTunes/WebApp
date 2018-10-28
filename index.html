@@ -13,20 +13,20 @@
             <div id ="card_container">
                 <div id="flip-container">
                 <div id="flipper">
-                    <div onclick="showBack(false, true)" id="front">Front</div>
+                    <div ontouchstart ="showBack(false, true)" id="front">Front</div>
                     <div id="back">Back</div>
                 </div>
                 </div>
             </div>
             <br>
             <div id="input_conatiner"> 
-                <input onclick="showFront()" type="text" id="textInput">
+                <input ontouchstart ="showFront()" type="text" id="textInput">
                 <br>
                 <br>
-                <button onclick="addLetter('ä')">ä</button>
-                <button onclick="addLetter('ö')">ö</button>
-                <button onclick="addLetter('ü')">ü</button>
-                <button onclick="addLetter('ß')">ß</button>
+                <button ontouchstart ="addLetter('ä')">ä</button>
+                <button ontouchstart ="addLetter('ö')">ö</button>
+                <button ontouchstart ="addLetter('ü')">ü</button>
+                <button ontouchstart ="addLetter('ß')">ß</button>
             </div>
         </div>
     </body>

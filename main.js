@@ -16,6 +16,8 @@ class Word {
 Variables
 */
 
+var back = document.getElementById("back");
+
 var display = document.getElementById("flipper");
 var container = document.getElementById("card_container");
 var textInput = document.getElementById("textInput");
@@ -121,7 +123,7 @@ function setNext() {
     showFront();
     jumpLeft();
 
-    display.style.backgroundColor = "#1C86EE";
+    back.style.backgroundColor = "#1C86EE";
 
     if (currentList[currentDeckIndex] === null) {
         if ((5 <= review && 0 < used.length) || notUsed.length === 0) {
@@ -204,12 +206,12 @@ function showBack(correct, hint = false) {
     display.style.webkitTransform = "rotateY(180deg)";
 
     if (hint) {
-        display.style.backgroundColor = "#1C86EE";
+        back.style.backgroundColor = "#1C86EE";
         currentList[currentDeckIndex].streak = false;
     } else if (correct) {
-        display.style.backgroundColor = "green";
+        back.style.backgroundColor = "green";
     } else {
-        display.style.backgroundColor = "red";
+        back.style.backgroundColor = "red";
     }
 }
 

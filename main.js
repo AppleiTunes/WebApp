@@ -225,6 +225,11 @@ function unlockInput() {
     textInput.focus();
 }
 
+function addLetter(letter) {
+    textInput.value += letter;
+    showFront();
+}
+
 
 /*
 Don't need
